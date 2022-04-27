@@ -20,7 +20,8 @@ You can also set the following environment variables, for example in the include
 |-----|-------------|
 |APP_NAME|The name used when creating a container.|
 |MYSQL_ROOT_PASSWORD|The MySQL root password used when creating the container.|
-|PATH_TO_APP|Path to you application.|
+|PATH_TO_APP|Path to application.|
+|PATH_TO_DB|Path to DB.|
 
 ## Usage
 
