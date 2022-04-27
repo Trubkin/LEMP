@@ -1,0 +1,49 @@
+version: '3'
+services:
+    php:
+        # image: 'php:7.2-fpm'
+        build:
+            context: ./docker
+            dockerfile: Dockerfile
+        container_name: ${APP_NAME:?err}-php
+        volumes:
+            - '${PATH_TO_APP}:/var/www/html'
+            - './etc/:/usr/local/etc/php'
+        # networks:
+        #     - backend   
+
+    nginx:
+        image: nginx:latest
+        container_name: ${APP_NAME:?err}-nginx
+        restart: always
+        ports:
+            - '80:80'
+            - '443:443'
+        depends_on:
+            - php
+            - mysql
+        volumes:
+            - '${PATH_TO_APP}:/var/www/html'
+            - './config/nginx:/etc/nginx/conf.d'
+        # networks:
+        #     - backend
+
+    mysql:
+        image: mysql:5.7
+        container_name: ${APP_NAME:?err}-mysql
+        restart: 'on-failure'
+        env_file:
+            - ./.env
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        volumes:
+            - ./mysql:/var/lib/mysql
+            - ./etc/mysql:/etc/mysql
+        ports:
+            - '3306:3306'
+        # networks:
+        #     - backend
+    
+# networks:
+#     backend:
+    
