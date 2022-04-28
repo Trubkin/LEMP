@@ -8,12 +8,12 @@ services:
         container_name: ${APP_NAME:?err}-php
         volumes:
             - '${PATH_TO_APP}:/var/www/html'
-            - './etc/:/usr/local/etc/php'
+            - './etc/php:/usr/local/etc/php'
         networks:
             - backend   
 
     nginx:
-        image: nginx:latest
+        image: nginx:1.21
         container_name: ${APP_NAME:?err}-nginx
         restart: always
         ports:
@@ -24,7 +24,7 @@ services:
             - mysql
         volumes:
             - '${PATH_TO_APP}:/var/www/html'
-            - './config/nginx:/etc/nginx/conf.d'
+            - './etc/config/nginx:/etc/nginx/conf.d'
         networks:
             - backend
 
@@ -43,16 +43,16 @@ services:
             - '3306:3306'
         networks:
             - backend
-    myadmin:
-        image: phpmyadmin/phpmyadmin
-        container_name: ${APP_NAME:?err}-phpmyadmin
-        ports:
-            - "8080:80"
-        restart: always
-        depends_on:
-            - mysql
-        networks:
-            - backend
+    # myadmin:
+    #     image: phpmyadmin/phpmyadmin
+    #     container_name: ${APP_NAME:?err}-phpmyadmin
+    #     ports:
+    #         - "8080:80"
+    #     restart: always
+    #     depends_on:
+    #         - mysql
+    #     networks:
+    #         - backend
     
 networks:
     backend:
