@@ -13,7 +13,7 @@ services:
             - backend   
 
     nginx:
-        image: nginx:1.21
+        image: nginx:1.21.1
         container_name: ${APP_NAME:?err}-nginx
         restart: always
         ports:
